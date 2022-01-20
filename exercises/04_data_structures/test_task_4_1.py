@@ -6,6 +6,7 @@ from pyneng_common_functions import check_pytest
 
 check_pytest(__loader__, __file__)
 
+print('hello')
 
 def test_task_stdout(capsys):
     """
