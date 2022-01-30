@@ -49,3 +49,9 @@ london_co = {
         "routing": True,
     },
 }
+
+router = input('Введите имя устройства: ')
+option = input(f"Введите имя параметра {list(london_co[router].keys())}: ")
+
+print(london_co[router].get(option,'Такого параметра нет'))
+
