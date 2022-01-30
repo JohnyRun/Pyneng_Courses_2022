@@ -30,3 +30,30 @@ Out[1]: '11111111111111111111111111110000'
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
+network = input('Введите ip-адрес в формате:10.1.1.0/24:  ')
+network = network.split('/')
+
+template_network = """
+        Network:
+        {:<8}  {:<8}  {:<8}  {:<8}
+        {:08b}  {:08b}  {:08b}  {:08b}
+        """
+template_mask = """
+        Mask:
+        /{}
+        {:<8}  {:<8}  {:<8}  {:<8}
+        {:<8}  {:<8}  {:<8}  {:<8}
+        """
+
+result_network_list = network[0]
+mask = network[1]
+mask_bin = '1' * int(mask) + '0' * (32-int(mask))
+print(mask_bin[18:8])
+
+print(template_network.format(int(result_network_list.split('.')[0]), int(result_network_list.split('.')[1]),
+                              int(result_network_list.split('.')[2]), int(result_network_list.split('.')[3]),
+                              int(result_network_list.split('.')[0]), int(result_network_list.split('.')[1]),
+                              int(result_network_list.split('.')[2]), int(result_network_list.split('.')[3])))
+
+print(template_mask.format(mask,int(mask_bin[0:8],2), int(mask_bin[9:17],2), int(mask_bin[18:26],2), int(mask_bin[27:32],2),
+                           mask_bin[0:8], mask_bin[8:16], mask_bin[16:24], mask_bin[24:32]))
