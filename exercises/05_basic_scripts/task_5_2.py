@@ -55,5 +55,5 @@ print(template_network.format(int(result_network_list.split('.')[0]), int(result
                               int(result_network_list.split('.')[0]), int(result_network_list.split('.')[1]),
                               int(result_network_list.split('.')[2]), int(result_network_list.split('.')[3])))
 
-print(template_mask.format(mask,int(mask_bin[0:8],2), int(mask_bin[9:17],2), int(mask_bin[18:26],2), int(mask_bin[27:32],2),
+print(template_mask.format(mask,int(mask_bin[0:8],2), int(mask_bin[8:16],2), int(mask_bin[16:24],2), int(mask_bin[24:32],2),
                            mask_bin[0:8], mask_bin[8:16], mask_bin[16:24], mask_bin[24:32]))
