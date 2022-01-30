@@ -16,3 +16,6 @@
 """
 
 mac = "AAAA:BBBB:CCCC"
+
+result_bin = '{:b}{:b}{:b}'
+print(result_bin.format(int(mac.split(':')[0],16), int(mac.split(':')[1],16), int(mac.split(':')[2],16)))
