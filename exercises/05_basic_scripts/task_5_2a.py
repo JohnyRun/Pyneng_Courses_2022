@@ -55,7 +55,7 @@ network = network.split('/')
 template_network = """
         Network:
         {:<8}  {:<8}  {:<8}  {:<8}
-        {:<08}  {:<08}  {:<08}  {:<08}
+        {:>08}  {:>08}  {:>08}  {:>08}
         """
 template_mask = """
         Mask:
