@@ -17,3 +17,27 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
+
+ip_address = input('Введите ip-адрес в формате 10.0.1.1: ')
+
+ip_address_octets_list = ip_address.split('.')
+new_ip_address_octets_list = []
+
+if len(ip_address_octets_list) == 4 and ip_address_octets_list.count('.') == 3:
+    for ip in ip_address_octets_list:
+        try:
+            new_ip_address_octets_list.append(int(ip))
+        except ValueError:
+            print('Неправильный IP-адрес')
+    if int(ip_address_octets_list[0]) in range(1,224):
+        print('unicast')
+    elif int(ip_address_octets_list[0]) in range(224,240):
+        print('multicast')
+    elif ip_address_octets_list[0] == '255' and ip_address_octets_list[1] == '255' and ip_address_octets_list[2] == '255' and ip_address_octets_list[3] == '255':
+        print('local broadcast')
+    elif ip_address_octets_list[0] == '0' and ip_address_octets_list[1] == '0' and ip_address_octets_list[2] == '0' and ip_address_octets_list[3] == '0':
+        print('unassigned')
+    else:
+        print('unused')
+else:
+    print('Неправильный IP-адрес')
