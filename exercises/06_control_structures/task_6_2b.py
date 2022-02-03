@@ -34,9 +34,9 @@ while True:
                 print('unicast')
             elif int(new_ip_address_octets_list[0]) in range(224,240):
                 print('multicast')
-            elif new_ip_address_octets_list[0] == '255' and new_ip_address_octets_list[1] == '255' and new_ip_address_octets_list[2] == '255' and new_ip_address_octets_list[3] == '255':
+            elif new_ip_address_octets_list[0] == 255 and new_ip_address_octets_list[1] == 255 and new_ip_address_octets_list[2] == 255 and new_ip_address_octets_list[3] == 255:
                 print('local broadcast')
-            elif new_ip_address_octets_list[0] == '0' and new_ip_address_octets_list[1] == '0' and new_ip_address_octets_list[2] == '0' and new_ip_address_octets_list[3] == '0':
+            elif new_ip_address_octets_list[0] == 0 and new_ip_address_octets_list[1] == 0 and new_ip_address_octets_list[2] == 0 and new_ip_address_octets_list[3] == 0:
                 print('unassigned')
             else:
                 print('unused')
