@@ -74,6 +74,29 @@ trunk = {
     "0/7": ["only", "30"],
 }
 
+
+for intf, vlan_and_actionlist in trunk.items():
+    vlan_list = []
+    for vlan in vlan_and_actionlist:
+        if vlan.isdigit():
+            vlan_list.append(vlan)
+    action = vlan_and_actionlist[0]
+    if action == 'del':
+        action = 'remove'
+    print("interface FastEthernet" + intf)
+    for command in trunk_template:
+        if command.endswith('allowed vlan') and action != 'only':
+            print(f" {command} {action}" + ' ' + ','.join(vlan_list))
+        elif action == 'only' and command.endswith('allowed vlan'):
+            print(f" {command}" + ' ' + ','.join(vlan_list))
+        else:
+            print(f" {command}")
+
+
+
+
+
+
 # for intf, vlan in access.items():
 #     print("interface FastEthernet" + intf)
 #     for command in access_template:
