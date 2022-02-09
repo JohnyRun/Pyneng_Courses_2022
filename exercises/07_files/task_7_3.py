@@ -20,3 +20,14 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+
+with open('CAM_table.txt') as file:
+    for line in file:
+        line = line.split()
+        if line:
+            if line[0].isdigit():
+                vlan = line[0]
+                mac = line[1]
+                port = line[3]
+                print('{:5} {} {:>8}'.format(vlan,mac,port))
+
