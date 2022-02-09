@@ -16,4 +16,18 @@
 
 """
 
+from sys import argv
+
 ignore = ["duplex", "alias", "configuration"]
+
+file_conf = argv[1]
+
+with open(file_conf) as file:
+    for line in file:
+        flag = False
+        if not "!" in line:
+            for ignore_word in ignore:
+                if ignore_word in line:
+                    flag = True
+            if not flag:
+                print(line.rstrip())
