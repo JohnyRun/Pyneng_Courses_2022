@@ -25,3 +25,27 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
+
+def get_int_vlan_map(config_filename):
+    with open(config_filename) as file:
+        access_dict = {}
+        trunk_dict = {}
+        check_vlan_1 = False
+        for line in file:
+            if 'interface Fast' in line:
+                check_vlan_1 = False
+                port = line.split()[-1]
+            elif 'access vlan' in line:
+                access_dict[port] = int(line.split()[-1])
+            elif 'trunk allowed vlan' in line:
+                vlan_list = line.split()[-1].split(',')
+                vlan_list = [int(vlan) for vlan in vlan_list]
+                trunk_dict[port] = vlan_list
+            else:
+                if 'mode access' in line:
+                    access_dict[port] = 1
+    result_list = [access_dict, trunk_dict]
+    return tuple(result_list)
+
+if __name__ == '__main__':
+    print(get_int_vlan_map('config_sw2.txt'))
