@@ -66,27 +66,33 @@ def ignore_command(command, ignore):
     return ignore_status
 
 def convert_config_to_dict(config_filename):
-    interfaces_dict = {}
-    other_dict = {}
+    result_dict = {}
+    full_config_list = []
+    commands_list = []
+    counter = False
+    port = ''
     with open(config_filename) as file:
-        command_list = []
-        flag_for_add_command = False
         for line in file:
-            if flag_for_add_command:
-                if not ignore_command(line,ignore):
-                    command_list.append(line.strip())
-            if 'interface Fast' in line:
-                port = line.strip()
-                flag_for_add_command = True
-            if ignore_command(line,ignore) or '!' in line:
-                flag_for_add_command = False
-                if command_list:
-                    interfaces_dict[port] = command_list
-                    command_list = []
+            if ignore_command(line, ignore) or '!' in line:
                 continue
             else:
-                interfaces_dict[line.strip()] = []
-        return interfaces_dict
+                full_config_list.append(line.strip())
+    full_config_list.pop(0)
+
+    for line_config in full_config_list:
+        if port and not 'interface Fast' in line_config:
+            commands_list.append(line_config)
+            counter = True
+        if 'interface Fast' in line_config:
+            port = line_config
+            counter = False
+            commands_list = []
+        elif counter and port and commands_list:
+                result_dict[port] = commands_list
+                counter = False
+        else:
+            result_dict[line_config] = []
+    return result_dict
 
 if __name__ == '__main__':
-            print(convert_config_to_dict('config_sw1.txt'))
+    print(convert_config_to_dict('config_sw2.txt'))
