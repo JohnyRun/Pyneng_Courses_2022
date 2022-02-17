@@ -70,7 +70,6 @@ def convert_config_to_dict(config_filename):
     full_config_list = []
     commands_list = []
     counter = False
-    port = ''
     with open(config_filename) as file:
         for line in file:
             if ignore_command(line, ignore) or '!' in line:
@@ -78,15 +77,15 @@ def convert_config_to_dict(config_filename):
             else:
                 full_config_list.append(line.strip())
     full_config_list.pop(0)
-
     for line_config in full_config_list:
-        if port and not 'interface Fast' in line_config:
+        if port and not 'interface' in line_config and not 'line' in line_config and not 'end' in line_config:
             commands_list.append(line_config)
             counter = True
-        if 'interface Fast' in line_config:
+        if 'interface' in line_config or 'line' in line_config:
             port = line_config
             counter = False
             commands_list = []
+            result_dict[port] = []
         elif counter and port and commands_list:
                 result_dict[port] = commands_list
                 counter = False
@@ -95,4 +94,4 @@ def convert_config_to_dict(config_filename):
     return result_dict
 
 if __name__ == '__main__':
-    print(convert_config_to_dict('config_sw2.txt'))
+    print(convert_config_to_dict('config_sw1.txt'))
