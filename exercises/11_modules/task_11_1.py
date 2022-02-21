@@ -43,22 +43,27 @@ def parse_cdp_neighbors(command_output):
     и с файлами и с выводом с оборудования.
     Плюс учимся работать с таким выводом.
     """
-    result_dict = []
+    result_dict = {}
     neigbours_table = []
     conf_list = command_output.split('\n')
     for line in conf_list:
         if line:
             correct_conf_list = line.split()
-            if len(correct_conf_list) == 10:
+            if len(correct_conf_list) == 10 or 'Eth' in correct_conf_list[-2]:
                 neigbours_table.append(correct_conf_list)
             for line_config in correct_conf_list:
                 if '>' in line_config:
-                    local_port = line_config.split('>')[0]
-    print(neigbours_table)
-    print(local_port)
-
+                    local_device = line_config.split('>')[0]
+    for lldp_line in neigbours_table:
+        remote_device = lldp_line[0]
+        remote_port = lldp_line[-2] + lldp_line[-1]
+        local_port = lldp_line[1] + lldp_line[2]
+        local_tuple = (local_device, local_port)
+        remote_tuple = (remote_device, remote_port)
+        result_dict[local_tuple] = remote_tuple
+    return result_dict
 
 
 if __name__ == "__main__":
-    with open("sh_cdp_n_sw1.txt") as f:
+    with open("sh_cdp_n_r3.txt") as f:
         print(parse_cdp_neighbors(f.read()))
