@@ -74,9 +74,27 @@
 
 """
 
+from task_11_2 import create_network_map
+from draw_network_graph import draw_topology
+from pprint import pprint
+
 infiles = [
     "sh_cdp_n_sw1.txt",
     "sh_cdp_n_r1.txt",
     "sh_cdp_n_r2.txt",
     "sh_cdp_n_r3.txt",
 ]
+
+def unique_network_map(topology_dict):
+    result_dict = topology_dict.copy()
+    for key, value in topology_dict.items():
+        if value in topology_dict.keys():
+            result_dict.pop(key)
+        else:
+
+    return topology_dict, result_dict
+
+if __name__ == "__main__":
+    pprint(unique_network_map(create_network_map(infiles)))
+    #topology = unique_network_map(create_network_map(infiles))
+    #draw_topology(topology)
