@@ -86,15 +86,13 @@ infiles = [
 ]
 
 def unique_network_map(topology_dict):
-    result_dict = topology_dict.copy()
-    for key, value in topology_dict.items():
-        if value in topology_dict.keys():
-            result_dict.pop(key)
-        else:
-
-    return topology_dict, result_dict
+    new_dict = topology_dict.copy()
+    for key,value in topology_dict.items():
+        if topology_dict.get(value) == key and new_dict.get(value) == key:
+            del new_dict[key]
+    return new_dict
 
 if __name__ == "__main__":
     pprint(unique_network_map(create_network_map(infiles)))
-    #topology = unique_network_map(create_network_map(infiles))
-    #draw_topology(topology)
+    topology = unique_network_map(create_network_map(infiles))
+    draw_topology(topology)
