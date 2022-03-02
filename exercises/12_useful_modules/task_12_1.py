@@ -24,7 +24,7 @@ def ping_ip_addresses(ip_list):
     alive_ip = []
     not_alive_ip = []
     for ip in ip_list:
-        result = subprocess.run(['ping','-n','1', ip],stdout=subprocess.DEVNULL)
+        result = subprocess.run(['ping','-c','1', ip],stdout=subprocess.DEVNULL)
         if result.returncode == 0:
             alive_ip.append(ip)
         else:
