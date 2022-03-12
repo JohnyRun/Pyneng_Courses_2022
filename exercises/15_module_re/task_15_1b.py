@@ -35,13 +35,14 @@ def get_ip_from_cfg(configFilename):
     ip_list = []
     with open(configFilename) as file:
         for line in file:
+            match = re.search(r'(\d+\.\d+\.\d+\.\d+) +(\d{3}\.\d+\.\d+\.\d+)', line)
             if 'interface' in line:
                 interface = line.split()[-1]
-            match = re.search(r'(\d+\.\d+\.\d+\.\d+) +(\d{3}\.\d+\.\d+\.\d+)', line)
-            if match and 'ip address' in line:
+            elif match and 'ip address' in line and interface:
                 ip_list.append(match.groups())
-
-            result[interface] = ip_list
+            elif '!' in line and ip_list:
+                result[interface] = ip_list
+                ip_list = []
     return result
 
 
