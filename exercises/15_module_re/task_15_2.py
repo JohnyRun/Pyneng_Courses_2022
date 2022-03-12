@@ -21,3 +21,19 @@
 Проверить работу функции на примере файла sh_ip_int_br.txt.
 
 """
+import re
+
+def parse_sh_ip_int_br(filename):
+    result = []
+    with open(filename) as file:
+        for line in file:
+            match_for_interfaces_up = re.search(r'(\S+)\s+(\d+\.\d+\.\d+\.\d+)\s+\w+ +\w+ +(\w+)\s+(\w+)', line)
+            match_for_interfaces_down = re.search(r'(\S+)\s+(\w{10})\s+\w+\s+\w+\s+\w+\s(\w+)\s+(\w+)', line)
+            if match_for_interfaces_up:
+                result.append(match_for_interfaces_up.groups())
+            elif match_for_interfaces_down:
+                result.append(match_for_interfaces_down.groups())
+    return result
+
+if __name__ == '__main__':
+    print(parse_sh_ip_int_br('sh_ip_int_br.txt'))
