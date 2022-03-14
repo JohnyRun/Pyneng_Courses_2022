@@ -28,7 +28,7 @@ def parse_sh_ip_int_br(filename):
     with open(filename) as file:
         for line in file:
             match_for_interfaces_up = re.search(r'(\S+)\s+(\d+\.\d+\.\d+\.\d+)\s+\w+ +\w+ +(\w+)\s+(\w+)', line)
-            match_for_interfaces_down = re.search(r'(\S+)\s+(\w{10})\s+\w+\s+\w+\s+\w+\s(\w+)\s+(\w+)', line)
+            match_for_interfaces_down = re.search(r'(\S+)\s+(\w{10})\s+\w+\s+\w+\s+(\w+\D+)\s+(\w+)', line)
             if match_for_interfaces_up:
                 result.append(match_for_interfaces_up.groups())
             elif match_for_interfaces_down:
