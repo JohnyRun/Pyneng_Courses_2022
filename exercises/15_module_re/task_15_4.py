@@ -24,3 +24,27 @@ interface Loopback0
 
 Проверить работу функции на примере файла config_r1.txt.
 """
+import re
+from pprint import pprint
+
+def get_ints_without_description(filename):
+    result_list = []
+    ports_with_description = []
+    interfaces_types = ['Loopback']
+    with open(filename) as file:
+        file = file.read()
+        for line in file.split('\n'):
+            if line.startswith('interface'):
+                result_list.append(line.split()[-1])
+        port_iter = re.finditer(r'interface \S+'
+                          r'\s+description',file)
+        for match in port_iter:
+            ports_with_description.append(match.group().split('\n')[0])
+        ports_with_description = [x.split()[-1] for x in ports_with_description]
+        for port in ports_with_description:
+            result_list.remove(port)
+        return result_list
+
+
+if __name__ == '__main__':
+    print(get_ints_without_description('config_r1.txt'))
