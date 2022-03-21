@@ -35,11 +35,11 @@ import csv
 from pprint import pprint
 import re
 
-def write_dhcp_snooping_to_csv(filenames):
+def write_dhcp_snooping_to_csv(filenames,output):
     """
     filenames - список с именами файлов с выводом show dhcp snooping binding
     """
-    result_list = [['switch,mac,ip,vlan,interface']]
+    result_list = [['switch','mac','ip','vlan','interface']]
     for snoop_file in filenames:
         device_name= snoop_file.split('_')[0]
         with open(snoop_file,'r') as file:
@@ -49,10 +49,10 @@ def write_dhcp_snooping_to_csv(filenames):
                                   row[0])
                 if match:
                     result_list.append([device_name, match.group('mac'), match.group('ip'), match.group('vlan'), match.group('port')])
-    with open('output','w') as writing_file:
+    with open(output,'w') as writing_file:
         writer = csv.writer(writing_file)
         writer.writerows(result_list)
 
 
 if __name__ == '__main__':
-    write_dhcp_snooping_to_csv(['sw1_dhcp_snooping.txt', 'sw2_dhcp_snooping.txt', 'sw3_dhcp_snooping.txt'])
+    write_dhcp_snooping_to_csv(['sw1_dhcp_snooping.txt', 'sw2_dhcp_snooping.txt', 'sw3_dhcp_snooping.txt'],'output')
