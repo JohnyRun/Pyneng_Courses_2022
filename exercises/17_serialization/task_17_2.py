@@ -44,8 +44,35 @@
 """
 
 import glob
+import csv
+import re
+from pprint import pprint
 
 sh_version_files = glob.glob("sh_vers*")
-# print(sh_version_files)
+#print(sh_version_files)
 
 headers = ["hostname", "ios", "image", "uptime"]
+
+with open('sh_version_r1.txt') as file:
+    show_ver = file.read()
+
+def parse_sh_version(filename):
+    result_list = []
+    regex = (r'ROM: System \S+ Version (?P<ios>\S+[^ ,]), [ +\S+]'
+             r'|router uptime is (?P<uptime>\S+ \w+, \d+ \w+, \d+ \w+)'
+             r'|System image file is "(?P<image>\S+)"')
+    match = re.finditer(regex, filename)
+    if match:
+        for i in match:
+            if i.group('ios'):
+                result_list.append(i.group('ios'))
+            if i.group('uptime'):
+                result_list.append(i.group('uptime'))
+            if i.group('image'):
+                    result_list.append(i.group('image'))
+    return tuple(result_list)
+
+
+
+if __name__ == '__main__':
+    parse_sh_version(show_ver)
