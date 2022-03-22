@@ -53,12 +53,9 @@ sh_version_files = glob.glob("sh_vers*")
 
 headers = ["hostname", "ios", "image", "uptime"]
 
-with open('sh_version_r1.txt') as file:
-    show_ver = file.read()
-
 def parse_sh_version(filename):
     result_list = []
-    regex = (r'ROM: System \S+ Version (?P<ios>\S+[^ ,]), [ +\S+]'
+    regex = (r'Cisco IOS Software,\s+\S+ \S+\s+\S+, Version (?P<ios>\S+[^ ,])'
              r'|router uptime is (?P<uptime>\S+ \w+, \d+ \w+, \d+ \w+)'
              r'|System image file is "(?P<image>\S+)"')
     match = re.finditer(regex, filename)
@@ -66,13 +63,23 @@ def parse_sh_version(filename):
         for i in match:
             if i.group('ios'):
                 result_list.append(i.group('ios'))
-            if i.group('uptime'):
-                result_list.append(i.group('uptime'))
             if i.group('image'):
-                    result_list.append(i.group('image'))
+                result_list.append(i.group('image'))
+            if i.group('uptime'):
+                    result_list.append(i.group('uptime'))
     return tuple(result_list)
 
-
+def write_inventory_to_csv(data_filenames,csv_filename):
+    list_for_csv = [headers]
+    for file in data_filenames:
+        hostname = file.split('_')[-1].split('.')[0]
+        with open(file) as show_ver_file, \
+                open(csv_filename, 'w') as file_for_writing:
+            list_for_csv.append([hostname])
+            list_for_csv.append(parse_sh_version(show_ver_file.read()))
+            writer = csv.writer(file_for_writing)
+            writer.writerows(list_for_csv)
+            #pprint(list_for_csv)
 
 if __name__ == '__main__':
-    parse_sh_version(show_ver)
+    write_inventory_to_csv(sh_version_files,'routers_inventory.csv')
