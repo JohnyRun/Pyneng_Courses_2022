@@ -32,7 +32,7 @@ def parse_sh_cdp_neighbors(filename):
     result_dict = {}
     include_dict1 = {}
     regex = (r'(?P<device>\S+)>[\S+ +]+'
-             r'|(?P<device_id>\S+)\s+(?P<Local_int>\S+ \S+)\s+\d+\s+\S+\s+\S+\s+\S+\s+\S+\s+(?P<port_id>\S+ \S+)')
+             r'|(\S+)\s+(\S+ \S+)\s+\d+\s+[RTBSHIrP\s]+\S+\s+(\w+ \S+)')
     match = re.findall(regex,filename)
     if match:
         for line in match:
@@ -46,5 +46,5 @@ def parse_sh_cdp_neighbors(filename):
     return result_dict
 
 if __name__ == '__main__':
-    with open('sh_cdp_n_sw1.txt','r') as file:
-        parse_sh_cdp_neighbors(file.read())
+    with open('sh_cdp_n_r1.txt','r') as file:
+        print(parse_sh_cdp_neighbors(file.read()))
