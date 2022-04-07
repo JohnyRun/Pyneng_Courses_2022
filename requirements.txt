@@ -3,3 +3,4 @@ yaml==6.0
 netmiko
 pexpect
 paramiko
+setuptools~=57.0.0
