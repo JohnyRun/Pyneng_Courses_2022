@@ -19,16 +19,6 @@
 
 """
 import yaml
-from jinja2 import Environment, FileSystemLoader
-from pprint import pprint
-
-def generate_config(template, data_dict):
-    template_dir = template.split('/')[0]
-    template_file = template.split('/')[1]
-    env = Environment(loader=FileSystemLoader(template_dir),trim_blocks=True)
-    template = env.get_template(template_file)
-    return template.render(data_dict)
-
 
 # так должен выглядеть вызов функции
 if __name__ == "__main__":
