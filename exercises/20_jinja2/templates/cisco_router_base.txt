@@ -1,9 +1,3 @@
-{% block base %}
-{% endblock %}
-!
-{% block eem %}
-{% endblock %}
-!
-{% block alias %}
-{% endblock %}
-!
+{% include 'cisco_base.txt' %}
+{% include 'alias.txt' %}
+{% include 'eem_int_desc.txt' %}
