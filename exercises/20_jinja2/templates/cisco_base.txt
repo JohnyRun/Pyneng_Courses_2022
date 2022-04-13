@@ -1,6 +1,3 @@
-{% extends "cisco_router_base.txt" %}
-
-{% block base %}
 service timestamps debug datetime msec localtime show-timezone
 service timestamps log datetime msec localtime show-timezone
 service tcp-keepalives-in
@@ -16,4 +13,3 @@ line con 0
 line vty 0 4
  logging synchronous
  history size 100
-{% endblock %}
