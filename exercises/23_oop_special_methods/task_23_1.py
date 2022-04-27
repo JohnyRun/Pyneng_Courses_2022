@@ -43,3 +43,24 @@ In [6]: ip1 = IPAddress('10.1.1.1/240')
 ValueError: Incorrect mask
 
 """
+from pprint import pprint
+import ipaddress
+import re
+
+class IPAddress:
+    def __init__(self,network):
+        self.network = network
+        ip = self.network.split('/')[0]
+        mask = int(self.network.split('/')[1])
+        match_ip = re.search(r'\d+\.\d+\.\d+\.\d+', ip)
+        if match_ip and ipaddress.IPv4Address(ip):
+            pass
+        else:
+            raise ValueError(f"Incorrect IPv4 address")
+        if not mask in range(8,33):
+            raise ValueError(f"Incorrect mask")
+
+
+if __name__ == "__main__":
+    netw = IPAddress('172.16.1.2')
+    print(netw)
