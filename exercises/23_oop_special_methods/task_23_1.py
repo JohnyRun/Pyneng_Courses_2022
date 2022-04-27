@@ -59,8 +59,9 @@ class IPAddress:
             raise ValueError(f"Incorrect IPv4 address")
         if not mask in range(8,33):
             raise ValueError(f"Incorrect mask")
-
+        self.ip = ip
+        self.mask = mask
 
 if __name__ == "__main__":
-    netw = IPAddress('172.16.1.2')
-    print(netw)
+    netw = IPAddress('172.16.1.2/32')
+    print(netw.ip)
