@@ -112,9 +112,7 @@ class Topology:
         else:
             self.topology[link1] = link2
     def __add__(self, other):
-        sum_topology = dict(self.topology)
-        sum_topology.update(dict(other.topology))
-        return Topology(sum_topology)
+        return Topology(self.topology | other.topology)
 
 if __name__ == '__main__':
     t1 = Topology(topology_example)
