@@ -120,6 +120,4 @@ if __name__ == '__main__':
     t1 = Topology(topology_example)
     t2 = Topology(topology_example2)
     t3 = t1+t2
-    pprint(t1.topology)
-    pprint(t2.topology)
     pprint(t3.topology)
